@@ -3,183 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختبار الفيزياء - إبراهيم الأسمري</title>
+    <title>اختبار الفيزياء - الأستاذ إبراهيم الأسمري</title>
     <style>
         :root { --primary: #2563eb; --success: #16a34a; --danger: #dc2626; --bg: #f0f2f5; }
-        
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: var(--bg); 
-            display: flex; 
-            justify-content: center; 
-            align-items: flex-start;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container { 
-            background: white; 
-            width: 100%; 
-            max-width: 800px; 
-            padding: 40px; 
-            border-radius: 20px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            text-align: center; /* توسيط كل النصوص افتراضياً */
-        }
-
-        .header { 
-            margin-bottom: 30px; 
-            border-bottom: 2px solid #f1f5f9; 
-            padding-bottom: 20px; 
-        }
-
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin: 0; padding: 20px; }
+        .container { background: white; width: 100%; max-width: 800px; padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); text-align: center; }
+        .header { margin-bottom: 30px; border-bottom: 2px solid #f1f5f9; padding-bottom: 20px; }
         h1 { color: var(--primary); margin: 0; font-size: 2.2em; }
-        
-        .school-info { 
-            color: #64748b; 
-            font-size: 1.1em; 
-            margin-top: 10px; 
-            display: block;
-        }
-
-        /* تنسيق الحقول والأزرار لتكون في المنتصف */
-        input[type="text"] { 
-            width: 80%; 
-            max-width: 400px;
-            padding: 15px; 
-            margin: 25px auto; 
-            border: 2px solid #e2e8f0; 
-            border-radius: 12px; 
-            font-size: 18px;
-            display: block;
-            text-align: center;
-        }
-
-        .btn { 
-            background: var(--primary); 
-            color: white; 
-            border: none; 
-            padding: 15px 40px; 
-            border-radius: 12px; 
-            cursor: pointer; 
-            font-size: 18px; 
-            font-weight: bold;
-            transition: all 0.3s ease;
-            display: inline-block;
-            margin: 10px auto;
-        }
-
-        .btn:hover { 
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
-        }
-
-        #quiz-screen, #result-screen { display: none; }
-
-        .timer-box { 
-            display: inline-block;
-            background: #fee2e2; 
-            color: var(--danger); 
-            padding: 8px 25px; 
-            border-radius: 50px; 
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
+        .teacher-info { color: #dc2626; font-size: 1.2em; margin-top: 10px; display: block; font-weight: bold; }
+        .school-info { color: #64748b; font-size: 1.1em; margin-top: 5px; display: block; }
+        input[type="text"] { width: 80%; max-width: 400px; padding: 15px; margin: 25px auto; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 18px; display: block; text-align: center; }
+        .btn { background: var(--primary); color: white; border: none; padding: 15px 40px; border-radius: 12px; cursor: pointer; font-size: 18px; font-weight: bold; transition: 0.3s; display: inline-block; margin: 10px auto; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3); }
+        .btn:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; }
+        #quiz-screen, #result-screen, #blocked-screen { display: none; }
+        .timer-box { display: inline-block; background: #fee2e2; color: var(--danger); padding: 8px 25px; border-radius: 50px; font-weight: bold; margin-bottom: 20px; }
         .q-card { margin-top: 30px; }
-        
-        #q-text { color: #1e293b; margin: 20px 0; line-height: 1.4; }
-
-        /* تنسيق الخيارات */
-        #options-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* توسيط الخيارات */
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .option { 
-            background: #f8fafc; 
-            padding: 18px; 
-            width: 90%;
-            max-width: 500px;
-            border-radius: 12px; 
-            cursor: pointer; 
-            transition: 0.2s; 
-            border: 2px solid #e2e8f0;
-            font-size: 17px;
-        }
-
-        .option:hover { 
-            background: #f1f5f9; 
-            border-color: var(--primary);
-        }
-
+        #options-container { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 20px; }
+        .option { background: #f8fafc; padding: 18px; width: 90%; max-width: 500px; border-radius: 12px; cursor: pointer; transition: 0.2s; border: 2px solid #e2e8f0; font-size: 17px; }
+        .option:hover { background: #f1f5f9; border-color: var(--primary); }
         .correct { background: #dcfce7 !important; border-color: var(--success) !important; color: #16a34a; font-weight: bold; }
         .wrong { background: #fee2e2 !important; border-color: var(--danger) !important; color: #dc2626; font-weight: bold; }
-
-        .feedback { 
-            margin: 25px auto; 
-            padding: 20px; 
-            border-radius: 12px; 
-            display: none; 
-            background: #eff6ff;
-            max-width: 600px;
-            border: 1px solid #bfdbfe;
-        }
-
-        /* تنسيق الجدول في النهاية */
-        .table-wrapper {
-            overflow-x: auto;
-            margin-top: 30px;
-        }
-
+        .feedback { margin: 25px auto; padding: 20px; border-radius: 12px; display: none; background: #eff6ff; max-width: 600px; border: 1px solid #bfdbfe; }
+        .table-wrapper { overflow-x: auto; margin-top: 30px; }
         table { width: 100%; border-collapse: collapse; min-width: 600px; }
-        th, td { border: 1px solid #e2e8f0; padding: 15px; text-align: center; }
-        th { background: #f8fafc; color: #475569; }
-        
-        .fb-cell { font-size: 13px; color: #64748b; text-align: right; }
+        th, td { border: 1px solid #e2e8f0; padding: 12px; text-align: center; }
+        th { background: #f8fafc; }
+        .blocked-msg { color: var(--danger); font-size: 1.5em; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <div id="blocked-screen">
+        <div class="header">
+            <h1 style="color: var(--danger);">نعتذر منك! ⚠️</h1>
+        </div>
+        <p class="blocked-msg">لقد قمت بتأدية هذا الاختبار مسبقاً.</p>
+        <p>لا يُسمح بإعادة الاختبار مرة أخرى حسب تعليمات الأستاذ.</p>
+    </div>
+
     <div id="start-screen">
         <div class="header">
             <h1>اختبار الفيزياء الممتع 🚀</h1>
-            <span class="school-info">إعداد الطالب: <b>إبراهيم الأسمري</b></span>
+            <span class="teacher-info">إعداد الأستاذ: إبراهيم الأسمري</span>
             <span class="school-info">ثانوية الأمير عبدالمجيد - الرياض</span>
         </div>
-        <p style="font-size: 1.2em; color: #475569;">مرحباً بك في تحدي الفيزياء! يرجى كتابة اسمك للبدء:</p>
-        <input type="text" id="student-name" placeholder="أدخل اسمك هنا...">
-        <br>
-        <button class="btn" onclick="startQuiz()">ابدأ الرحلة العلمية</button>
+        <p>مرحباً بك! الأسئلة تظهر بترتيب عشوائي. أدخل اسمك للبدء:</p>
+        <input type="text" id="student-name" placeholder="أدخل اسمك الكامل...">
+        <button class="btn" id="start-btn" onclick="startQuiz()">ابدأ الاختبار</button>
     </div>
 
     <div id="quiz-screen">
         <div class="timer-box">الوقت المتبقي: <span id="timer">60</span> ثانية</div>
-        <div id="display-name" style="font-weight: bold; color: var(--primary); font-size: 1.1em;"></div>
-        
+        <div id="display-name" style="font-weight: bold; color: var(--primary);"></div>
         <div class="q-card">
             <div id="q-number" style="color: #64748b; font-weight: bold;"></div>
             <h2 id="q-text"></h2>
             <div id="options-container"></div>
         </div>
-
         <div id="feedback-box" class="feedback">
-            <h4 id="fb-title" style="margin: 0 0 10px 0;"></h4>
+            <h4 id="fb-title" style="margin: 0 0 5px 0;"></h4>
             <p id="fb-text" style="margin: 0;"></p>
         </div>
-
         <button id="next-btn" class="btn" style="display:none;" onclick="nextQuestion()">السؤال التالي ➡️</button>
     </div>
 
     <div id="result-screen">
         <h2 id="res-title" style="color: var(--primary);"></h2>
-        <h3 id="res-score" style="background: #f1f5f9; display: inline-block; padding: 10px 25px; border-radius: 10px;"></h3>
-        
+        <h3 id="res-score"></h3>
         <div class="table-wrapper">
             <table>
                 <thead>
@@ -188,13 +80,13 @@
                         <th>السؤال</th>
                         <th>إجابتك</th>
                         <th>الصحيحة</th>
-                        <th>التوضيح العلمي</th>
+                        <th>التوضيح</th>
                     </tr>
                 </thead>
                 <tbody id="summary-body"></tbody>
             </table>
         </div>
-        <button class="btn" style="margin-top:30px;" onclick="location.reload()">إعادة الاختبار 🔄</button>
+        <p style="margin-top: 20px; color: #64748b;">(تم تسجيل محاولة واحدة فقط لهذا المتصفح)</p>
     </div>
 </div>
 
@@ -202,42 +94,59 @@
     let score = 0;
     let currentIdx = 0;
     let timerInterval;
-    let timeLeft = 60;
     let log = [];
-
-    // قائمة بـ 25 سؤال فيزياء
-    const questions = [
-        { q: "ما هي وحدة قياس القوة في النظام الدولي؟", options: ["جول", "نيوتن", "واط", "باسكال"], correct: 1, fb: "النيوتن هو وحدة قياس القوة تيمناً بالعالم إسحاق نيوتن." },
-        { q: "المقاومة الكهربائية تقاس بوحدة:", options: ["فولت", "أمبير", "أوم", "كولوم"], correct: 2, fb: "الأوم هو الوحدة المستخدمة لقياس ممانعة الموصل للتيار." },
-        { q: "جهاز يستخدم لقياس التيارات الكهربائية الصغيرة جداً:", options: ["الأوميتر", "الجلفانومتر", "الفولتمتر", "البارومتر"], correct: 1, fb: "الجلفانومتر حساس جداً للكميات الضئيلة من التيار." },
-        { q: "السرعة المتجهة تشمل المقدار و ........", options: ["الزمن", "الاتجاه", "الكتلة", "درجة الحرارة"], correct: 1, fb: "السرعة المتجهة كمية فيزيائية متجهة تتحدد بالمقدار والاتجاه معاً." },
-        { q: "طاقة الحركة لجسم تعتمد على كتلته و ........", options: ["ارتفاعه", "حجمه", "مربع سرعته", "لونه"], correct: 2, fb: "تتناسب طاقة الحركة طردياً مع مربع السرعة." },
-        { q: "ما هو تسارع الجاذبية الأرضية التقريبي؟", options: ["5.5 م/ث²", "9.8 م/ث²", "1.6 م/ث²", "12 م/ث²"], correct: 1, fb: "القيمة المعيارية لتسارع الجاذبية هي 9.8 متر لكل ثانية مربعة." },
-        { q: "تحول المادة من الحالة الصلبة إلى الغازية مباشرة يسمى:", options: ["التسامي", "الغليان", "التكاثف", "الانصهار"], correct: 0, fb: "التسامي هو تخطي الحالة السائلة تماماً." },
-        { q: "أي الموجات التالية لا تحتاج لوسط مادي لتنتقل؟", options: ["الصوت", "الماء", "الضوء", "الزلازل"], correct: 2, fb: "الضوء موجة كهرومغناطيسية تنتقل في الفراغ." },
-        { q: "المرايا التي تعطي صورة مصغرة ومجال رؤية واسع هي:", options: ["المقعرة", "المحدبة", "المستوية", "الأسطوانية"], correct: 1, fb: "لذلك تستخدم في المرايا الجانبية للسيارات." },
-        { q: "حالة للمادة تكون جزيئاتها متأينة (إلكترونات وأيونات):", options: ["الصلبة", "السائلة", "الغازية", "البلازما"], correct: 3, fb: "البلازما هي الحالة الرابعة وتوجد في النجوم والبرق." },
-        { q: "انحناء الضوء حول حواف الحاجز يسمى:", options: ["الانكسار", "الحيود", "الانعكاس", "الاستقطاب"], correct: 1, fb: "الحيود ظاهرة موجية تحدث عند اصطدام الموجة بحافة." },
-        { q: "المعدل الزمني لتغير السرعة المتجهة هو:", options: ["الإزاحة", "التسارع", "الشغل", "القدرة"], correct: 1, fb: "التسارع يعبر عن مدى سرعة تغير حركة الجسم." },
-        { q: "صوت الرعد يأتي بعد رؤية البرق لأن:", options: ["الرعد أبعد", "الضوء أسرع من الصوت", "الصوت أسرع", "الغيوم تحجب الصوت"], correct: 1, fb: "سرعة الضوء 300 ألف كم/ث، بينما الصوت 340 م/ث فقط." },
-        { q: "الجهاز الذي يحول الطاقة الحركية إلى كهربائية:", options: ["المحرك", "المولد", "البطارية", "المصباح"], correct: 1, fb: "المولد (الدينامو) ينتج كهرباء من الحركة." },
-        { q: "ما هو الجسيم ذو الشحنة الموجبة داخل النواة؟", options: ["الإلكترون", "النيوترون", "البروتون", "الفوتون"], correct: 2, fb: "البروتونات موجبة الشحنة وتحدد نوع العنصر." },
-        { q: "العدسة التي تستخدم لتصحيح طول النظر هي:", options: ["المحدبة", "المقعرة", "المستوية", "الأسطوانية"], correct: 0, fb: "العدسة المحدبة مجمعة وتساعد في تركيز الصورة على الشبكية." },
-        { q: "وحدة قياس الشغل والطاقة هي:", options: ["النيوتن", "الجول", "الواط", "الأمبير"], correct: 1, fb: "الجول هو الوحدة الدولية للطاقة والشغل." },
-        { q: "قانون نيوتن الثالث يقول: لكل فعل رد فعل مساوٍ له في المقدار و ........", options: ["مساوٍ في الاتجاه", "مضاعف له", "معاكس في الاتجاه", "ثابت"], correct: 2, fb: "الفعل ورد الفعل يعملان على جسمين مختلفين وفي اتجاهين متضادين." },
-        { q: "تزداد مقاومة السلك الكهربائي إذا زاد ........", options: ["طوله", "سمكه", "برودته", "الجهد"], correct: 0, fb: "زيادة طول المسار تزيد من احتمالية تصادم الإلكترونات." },
-        { q: "درجة غليان الماء بالسيليزيوس هي:", options: ["0", "32", "100", "273"], correct: 2, fb: "يغلي الماء النقي عند 100 درجة مئوية تحت الضغط الجوي العادي." },
-        { q: "المادة التي تسمح بانتقال الشحنات خلالها بسهولة:", options: ["العازل", "الموصل", "شبه الموصل", "الخشب"], correct: 1, fb: "الموصلات (مثل النحاس) تحتوي على إلكترونات حرة الحركة." },
-        { q: "القدرة الكهربائية تقاس بوحدة:", options: ["فولت", "واط", "أوم", "جول"], correct: 1, fb: "الواط هو معدل استهلاك الطاقة في الثانية." },
-        { q: "الموجات الطولية تتكون من تضاغطات و ........", options: ["قمم", "قيعان", "تخلخلات", "عقد"], correct: 2, fb: "مثل موجات الصوت في الهواء." },
-        { q: "ماذا يسمى الاضطراب الذي ينقل الطاقة عبر المادة أو الفراغ؟", options: ["الموجة", "الكتلة", "الجاذبية", "الزمن"], correct: 0, fb: "الموجات هي الوسيلة لنقل الطاقة دون نقل المادة نفسها." },
-        { q: "من هو العالم الذي اكتشف الجاذبية؟", options: ["أينشتاين", "نيوتن", "أديسون", "تسلا"], correct: 1, fb: "إسحاق نيوتن صاغ قانون الجذب العام الشهير." }
+    let questions = [
+        { q: "ما هي وحدة قياس القوة في النظام الدولي؟", options: ["جول", "نيوتن", "واط", "باسكال"], correct: "نيوتن", fb: "النيوتن هو وحدة قياس القوة." },
+        { q: "المقاومة الكهربائية تقاس بوحدة:", options: ["فولت", "أمبير", "أوم", "كولوم"], correct: "أوم", fb: "الأوم يقيس ممانعة الموصل للتيار." },
+        { q: "جهاز يستخدم لقياس التيارات الكهربائية الصغيرة جداً:", options: ["الأوميتر", "الجلفانومتر", "الفولتمتر", "البارومتر"], correct: "الجلفانومتر", fb: "الجلفانومتر حساس للتيارات الضئيلة." },
+        { q: "السرعة المتجهة تشمل المقدار و ........", options: ["الزمن", "الاتجاه", "الكتلة", "درجة الحرارة"], correct: "الاتجاه", fb: "تتحدد بالمقدار والاتجاه معاً." },
+        { q: "طاقة الحركة لجسم تعتمد على كتلته و ........", options: ["ارتفاعه", "حجمه", "مربع سرعته", "لونه"], correct: "مربع سرعته", fb: "تتناسب طردياً مع مربع السرعة." },
+        { q: "ما هو تسارع الجاذبية الأرضية التقريبي؟", options: ["5.5 م/ث²", "9.8 م/ث²", "1.6 م/ث²", "12 م/ث²"], correct: "9.8 م/ث²", fb: "9.8 متر لكل ثانية مربعة." },
+        { q: "تحول المادة من الحالة الصلبة إلى الغازية مباشرة يسمى:", options: ["التسامي", "الغليان", "التكاثف", "الانصهار"], correct: "التسامي", fb: "التسامي هو تخطي الحالة السائلة." },
+        { q: "أي الموجات التالية لا تحتاج لوسط مادي لتنتقل؟", options: ["الصوت", "الماء", "الضوء", "الزلازل"], correct: "الضوء", fb: "الضوء ينتقل في الفراغ." },
+        { q: "المرايا التي تعطي صورة مصغرة ومجال رؤية واسع هي:", options: ["المقعرة", "المحدبة", "المستوية", "الأسطوانية"], correct: "المحدبة", fb: "تستخدم في المرايا الجانبية للسيارات." },
+        { q: "حالة للمادة تكون جزيئاتها متأينة (إلكترونات وأيونات):", options: ["الصلبة", "السائلة", "الغازية", "البلازما"], correct: "البلازما", fb: "البلازما هي الحالة الرابعة." },
+        { q: "انحناء الضوء حول حواف الحاجز يسمى:", options: ["الانكسار", "الحيود", "الانعكاس", "الاستقطاب"], correct: "الحيود", fb: "الحيود ظاهرة موجية عند الحواف." },
+        { q: "المعدل الزمني لتغير السرعة المتجهة هو:", options: ["الإزاحة", "التسارع", "الشغل", "القدرة"], correct: "التسارع", fb: "التسارع يعبر عن تغير الحركة." },
+        { q: "صوت الرعد يأتي بعد رؤية البرق لأن:", options: ["الرعد أبعد", "الضوء أسرع من الصوت", "الصوت أسرع", "الغيوم تحجب الصوت"], correct: "الضوء أسرع من الصوت", fb: "الضوء 300 ألف كم/ث، الصوت 340 م/ث." },
+        { q: "الجهاز الذي يحول الطاقة الحركية إلى كهربائية:", options: ["المحرك", "المولد", "البطارية", "المصباح"], correct: "المولد", fb: "المولد (الدينامو) ينتج كهرباء." },
+        { q: "ما هو الجسيم ذو الشحنة الموجبة داخل النواة؟", options: ["الإلكترون", "النيوترون", "البروتون", "الفوتون"], correct: "البروتون", fb: "البروتونات موجبة الشحنة." },
+        { q: "العدسة التي تستخدم لتصحيح طول النظر هي:", options: ["المحدبة", "المقعرة", "المستوية", "الأسطوانية"], correct: "المحدبة", fb: "العدسة المحدبة مجمعة." },
+        { q: "وحدة قياس الشغل والطاقة هي:", options: ["النيوتن", "الجول", "الواط", "الأمبير"], correct: "الجول", fb: "الجول هو الوحدة الدولية للطاقة." },
+        { q: "قانون نيوتن الثالث يقول: لكل فعل رد فعل مساوٍ له في المقدار و ........", options: ["مساوٍ في الاتجاه", "مضاعف له", "معاكس في الاتجاه", "ثابت"], correct: "معاكس في الاتجاه", fb: "الفعل ورد الفعل متضادان اتجاهاً." },
+        { q: "تزداد مقاومة السلك الكهربائي إذا زاد ........", options: ["طوله", "سمكه", "برودته", "الجهد"], correct: "طوله", fb: "زيادة طول المسار تزيد المقاومة." },
+        { q: "درجة غليان الماء بالسيليزيوس هي:", options: ["0", "32", "100", "273"], correct: "100", fb: "يغلي الماء عند 100 درجة." },
+        { q: "المادة التي تسمح بانتقال الشحنات خلالها بسهولة:", options: ["العازل", "الموصل", "شبه الموصل", "الخشب"], correct: "الموصل", fb: "الموصلات تحتوي إلكترونات حرة." },
+        { q: "القدرة الكهربائية تقاس بوحدة:", options: ["فولت", "واط", "أوم", "جول"], correct: "واط", fb: "الواط معدل استهلاك الطاقة." },
+        { q: "الموجات الطولية تتكون من تضاغطات و ........", options: ["قمم", "قيعان", "تخلخلات", "عقد"], correct: "تخلخلات", fb: "مثل موجات الصوت في الهواء." },
+        { q: "ماذا يسمى الاضطراب الذي ينقل الطاقة عبر المادة أو الفراغ؟", options: ["الموجة", "الكتلة", "الجاذبية", "الزمن"], correct: "الموجة", fb: "الموجات تنقل الطاقة لا المادة." },
+        { q: "من هو العالم الذي صاغ قانون الجذب العام؟", options: ["أينشتاين", "نيوتن", "أديسون", "تسلا"], correct: "نيوتن", fb: "نيوتن هو مكتشف الجاذبية." }
     ];
+
+    // دالة الخلط (للعشوائية)
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    // التحقق من منع الإعادة عند تحميل الصفحة
+    window.onload = function() {
+        if(localStorage.getItem('quizDone_Ibrahim')) {
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('blocked-screen').style.display = 'block';
+        }
+    };
 
     function startQuiz() {
         const name = document.getElementById('student-name').value;
-        if(!name.trim()) return alert("لطفاً يا بطل، اكتب اسمك أولاً.");
-        document.getElementById('display-name').innerText = "بالتوفيق يا بطل: " + name;
+        if(!name.trim()) return alert("لطفاً، اكتب اسمك أولاً.");
+        
+        // تفعيل العشوائية للأسئلة
+        shuffle(questions);
+        
+        document.getElementById('display-name').innerText = "المختبر: " + name;
         document.getElementById('start-screen').style.display = 'none';
         document.getElementById('quiz-screen').style.display = 'block';
         showQuestion();
@@ -247,57 +156,61 @@
         clearInterval(timerInterval);
         if(currentIdx >= questions.length) return finishQuiz();
         
-        timeLeft = 60;
+        let timeLeft = 60;
         document.getElementById('timer').innerText = timeLeft;
-        document.getElementById('q-number').innerText = `السؤال الرقم (${currentIdx + 1}) من 25`;
+        document.getElementById('q-number').innerText = `السؤال (${currentIdx + 1}) من 25`;
         document.getElementById('feedback-box').style.display = 'none';
         document.getElementById('next-btn').style.display = 'none';
         
         const qData = questions[currentIdx];
         document.getElementById('q-text').innerText = qData.q;
         
+        // تفعيل العشوائية للخيارات
+        let currentOptions = [...qData.options];
+        shuffle(currentOptions);
+
         const container = document.getElementById('options-container');
         container.innerHTML = "";
         
-        qData.options.forEach((opt, i) => {
+        currentOptions.forEach((opt) => {
             const btn = document.createElement('div');
             btn.className = 'option';
             btn.innerText = opt;
-            btn.onclick = () => handleAnswer(i);
+            btn.onclick = () => handleAnswer(opt, btn, qData.correct);
             container.appendChild(btn);
         });
 
         timerInterval = setInterval(() => {
             timeLeft--;
             document.getElementById('timer').innerText = timeLeft;
-            if(timeLeft <= 0) handleAnswer(-1);
+            if(timeLeft <= 0) handleAnswer(null, null, qData.correct);
         }, 1000);
     }
 
-    function handleAnswer(selected) {
+    function handleAnswer(selectedText, btn, correctText) {
         clearInterval(timerInterval);
-        const qData = questions[currentIdx];
-        const options = document.querySelectorAll('.option');
-        const isCorrect = selected === qData.correct;
+        const allOptions = document.querySelectorAll('.option');
+        const isCorrect = selectedText === correctText;
         const fbBox = document.getElementById('feedback-box');
 
         if(isCorrect) score++;
-        log.push({ 
-            q: qData.q, 
-            user: selected === -1 ? "انتهى الوقت" : qData.options[selected], 
-            correct: qData.options[qData.correct], 
+        
+        log.push({
+            q: questions[currentIdx].q,
+            user: selectedText || "انتهى الوقت",
+            correct: correctText,
             status: isCorrect,
-            fb: qData.fb
+            fb: questions[currentIdx].fb
         });
 
-        options.forEach((opt, i) => {
+        allOptions.forEach(opt => {
             opt.style.pointerEvents = 'none';
-            if(i === qData.correct) opt.classList.add('correct');
-            else if(i === selected) opt.classList.add('wrong');
+            if(opt.innerText === correctText) opt.classList.add('correct');
+            if(selectedText && opt.innerText === selectedText && !isCorrect) opt.classList.add('wrong');
         });
 
-        document.getElementById('fb-title').innerText = isCorrect ? "إجابة ذكية! ✅" : "حاول مجدداً في المرة القادمة ❌";
-        document.getElementById('fb-text').innerText = qData.fb;
+        document.getElementById('fb-title').innerText = isCorrect ? "صحيح! ✅" : "خطأ! ❌";
+        document.getElementById('fb-text').innerText = questions[currentIdx].fb;
         fbBox.style.display = 'block';
         document.getElementById('next-btn').style.display = 'inline-block';
     }
@@ -308,13 +221,15 @@
     }
 
     function finishQuiz() {
+        // حفظ حالة الإتمام لمنع الإعادة
+        localStorage.setItem('quizDone_Ibrahim', 'true');
+        
         document.getElementById('quiz-screen').style.display = 'none';
         document.getElementById('result-screen').style.display = 'block';
         document.getElementById('res-title').innerText = `نتيجة الطالب: ${document.getElementById('student-name').value}`;
-        document.getElementById('res-score').innerText = `الدرجة النهائية: ${score} من 25`;
+        document.getElementById('res-score').innerText = `درجتك: ${score} من 25`;
         
         const body = document.getElementById('summary-body');
-        body.innerHTML = "";
         log.forEach((item, index) => {
             body.innerHTML += `
                 <tr>
@@ -322,7 +237,7 @@
                     <td>${item.q}</td>
                     <td style="color:${item.status?'#16a34a':'#dc2626'}; font-weight:bold;">${item.user}</td>
                     <td style="color:#16a34a; font-weight:bold;">${item.correct}</td>
-                    <td class="fb-cell">${item.fb}</td>
+                    <td style="font-size:12px; text-align:right;">${item.fb}</td>
                 </tr>`;
         });
     }
