@@ -13,17 +13,18 @@
         .teacher-name { color: var(--danger); font-size: 1.6em; font-weight: bold; display: block; margin-top: 10px; }
         .school-name { color: #64748b; font-size: 1.2em; font-weight: 500; display: block; margin-bottom: 15px; }
 
+        /* عداد الأسئلة */
+        .q-counter { background: var(--dark); color: white; padding: 5px 15px; border-radius: 20px; font-size: 14px; margin-bottom: 10px; display: inline-block; }
+
         .input-group { margin: 30px auto; max-width: 500px; display: flex; flex-direction: column; gap: 15px; }
         input[type="text"] { padding: 18px; border: 2px solid #e2e8f0; border-radius: 16px; font-size: 18px; text-align: center; }
         .btn { background: var(--primary); color: white; border: none; padding: 16px 45px; border-radius: 16px; cursor: pointer; font-size: 18px; font-weight: bold; transition: 0.3s; }
         
-        .student-header-info { background: #eff6ff; padding: 10px; border-radius: 12px; margin-bottom: 20px; color: var(--primary); border: 1px solid #dbeafe; display: flex; justify-content: center; gap: 20px; font-weight: bold; }
+        .student-header-info { background: #eff6ff; padding: 10px; border-radius: 12px; margin-bottom: 15px; color: var(--primary); border: 1px solid #dbeafe; display: flex; justify-content: center; gap: 20px; font-weight: bold; }
 
-        /* صندوق التغذية الراجعة أثناء الاختبار */
-        #feedback-area { display: none; margin: 20px auto; padding: 20px; border-radius: 15px; max-width: 600px; animation: fadeIn 0.5s; text-align: right; }
-        .fb-success { background: #dcfce7; border: 2px solid #16a34a; color: #15803d; }
-        .fb-danger { background: #fee2e2; border: 2px solid #dc2626; color: #b91c1c; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        #feedback-area { display: none; margin: 15px auto; padding: 15px; border-radius: 15px; max-width: 600px; text-align: right; border-right: 5px solid; }
+        .fb-success { background: #dcfce7; border-color: #16a34a; color: #15803d; }
+        .fb-danger { background: #fee2e2; border-color: #dc2626; color: #b91c1c; }
 
         .result-card { background: #f1f5f9; padding: 30px; border-radius: 20px; margin-bottom: 30px; border: 1px solid #e2e8f0; }
         .student-id { background: white; padding: 15px; border-radius: 12px; margin-bottom: 20px; display: inline-block; border-right: 5px solid var(--primary); text-align: right; min-width: 250px; }
@@ -38,10 +39,9 @@
         table { width: 100%; border-collapse: collapse; background: white; min-width: 600px; }
         th { background: #1e293b; color: white; padding: 12px; font-size: 14px; }
         td { padding: 12px; border: 1px solid #e2e8f0; font-size: 13px; text-align: right; vertical-align: top; }
-        .feedback-text-small { display: block; margin-top: 5px; font-size: 11px; color: #64748b; font-style: italic; background: #f8fafc; padding: 5px; border-radius: 4px; border-right: 3px solid #cbd5e1; }
 
         #quiz-screen, #result-screen, #blocked-screen { display: none; }
-        .option { background: #f8fafc; padding: 16px; width: 95%; max-width: 550px; border-radius: 15px; cursor: pointer; margin: 10px auto; border: 2px solid #e2e8f0; transition: 0.2s; }
+        .option { background: #f8fafc; padding: 16px; width: 95%; max-width: 550px; border-radius: 15px; cursor: pointer; margin: 10px auto; border: 2px solid #e2e8f0; transition: 0.2s; text-align: right; padding-right: 25px; }
         .correct-opt { background: #dcfce7 !important; border-color: var(--success) !important; color: #16a34a; font-weight: bold; }
         .wrong-opt { background: #fee2e2 !important; border-color: var(--danger) !important; color: #dc2626; font-weight: bold; }
     </style>
@@ -70,8 +70,11 @@
             <span>👤 <span id="quiz-student-name"></span></span>
             <span>🏫 <span id="quiz-student-class"></span></span>
         </div>
-        <div style="margin-bottom: 20px; font-weight: bold; color: var(--danger);">⏳ المتبقي: <span id="timer">60</span> ثانية</div>
-        <h2 id="q-text" style="min-height: 50px;"></h2>
+        
+        <div class="q-counter">سؤال رقم: <span id="current-q-num">1</span> من 25</div>
+        
+        <div style="margin-bottom: 15px; font-weight: bold; color: var(--danger);">⏳ المتبقي: <span id="timer">60</span> ثانية</div>
+        <h2 id="q-text" style="min-height: 50px; margin-top: 10px;"></h2>
         <div id="options-container"></div>
         
         <div id="feedback-area">
@@ -94,7 +97,6 @@
             </div>
             <div class="score-circle"><span id="res-score-num">0</span> / 25</div>
             <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
-            <p style="color: var(--primary); font-weight: bold; margin: 0;">( انتقل للنموذج التالي بارك الله فيك )</p>
         </div>
         <div class="table-container">
             <table>
@@ -137,7 +139,7 @@
 
     function shuffle(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; } }
 
-    window.onload = () => { if(localStorage.getItem('quiz_fb_done')) { document.getElementById('start-screen').style.display='none'; document.getElementById('blocked-screen').style.display='block'; } };
+    window.onload = () => { if(localStorage.getItem('quiz_final_asmry')) { document.getElementById('start-screen').style.display='none'; document.getElementById('blocked-screen').style.display='block'; } };
 
     function startQuiz() {
         const name = document.getElementById('student-name').value.trim();
@@ -155,6 +157,9 @@
     function showQuestion() {
         clearInterval(timerInterval);
         if(currentIdx >= questions.length) return finishQuiz();
+        
+        // تحديث عداد السؤال
+        document.getElementById('current-q-num').innerText = currentIdx + 1;
         
         let timeLeft = 60; document.getElementById('timer').innerText = timeLeft;
         document.getElementById('feedback-area').style.display = 'none';
@@ -192,7 +197,6 @@
             if(selected && opt.innerText === selected && !isCorrect) opt.classList.add('wrong-opt');
         });
 
-        // إظهار التغذية الراجعة الفورية
         const fbArea = document.getElementById('feedback-area');
         const fbStatus = document.getElementById('fb-status');
         const fbExpl = document.getElementById('fb-explanation');
@@ -200,20 +204,19 @@
         fbArea.style.display = 'block';
         if(isCorrect) {
             fbArea.className = 'fb-success';
-            fbStatus.innerText = "إجابة صحيحة! أحسنت بطل ✅";
+            fbStatus.innerText = "إجابة صحيحة! ✅";
         } else {
             fbArea.className = 'fb-danger';
-            fbStatus.innerText = selected ? "للأسف إجابة خاطئة ❌" : "انتهى الوقت ولم تجب! ⏳";
+            fbStatus.innerText = selected ? "إجابة خاطئة ❌" : "انتهى الوقت! ⏳";
         }
-        fbExpl.innerText = "توضيح: " + questionObj.fb;
-        
+        fbExpl.innerText = "التوضيح: " + questionObj.fb;
         document.getElementById('next-btn').style.display = 'inline-block';
     }
 
     function nextQuestion() { currentIdx++; showQuestion(); }
 
     function finishQuiz() {
-        localStorage.setItem('quiz_fb_done', 'true');
+        localStorage.setItem('quiz_final_asmry', 'true');
         document.getElementById('quiz-screen').style.display = 'none';
         document.getElementById('result-screen').style.display = 'block';
         document.getElementById('res-name').innerText = document.getElementById('student-name').value;
@@ -223,7 +226,7 @@
         
         const body = document.getElementById('summary-body');
         log.forEach((l, i) => {
-            body.innerHTML += `<tr><td>${i+1}</td><td><b>${l.q}</b><span class="feedback-text-small">${l.fb}</span></td><td style="color:${l.status?'green':'red'}">${l.user}</td><td style="color:green;font-weight:bold">${l.correct}</td></tr>`;
+            body.innerHTML += `<tr><td>${i+1}</td><td><b>${l.q}</b><br><small style="color:#64748b">${l.fb}</small></td><td style="color:${l.status?'green':'red'}">${l.user}</td><td style="color:green;font-weight:bold">${l.correct}</td></tr>`;
         });
     }
 </script>
