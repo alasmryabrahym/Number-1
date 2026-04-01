@@ -13,6 +13,10 @@
         .input-group { margin: 30px auto; max-width: 500px; display: flex; flex-direction: column; gap: 15px; }
         input[type="text"] { padding: 18px; border: 2px solid #e2e8f0; border-radius: 16px; font-size: 18px; text-align: center; }
         .btn { background: var(--primary); color: white; border: none; padding: 16px 45px; border-radius: 16px; cursor: pointer; font-size: 18px; font-weight: bold; transition: 0.3s; }
+        
+        /* شاشة الأسئلة: معلومات الطالب */
+        .student-header-info { background: #eff6ff; padding: 10px; border-radius: 12px; margin-bottom: 20px; color: var(--primary); border: 1px solid #dbeafe; display: flex; justify-content: center; gap: 20px; font-weight: bold; }
+
         .result-card { background: #f1f5f9; padding: 30px; border-radius: 20px; margin-bottom: 30px; border: 1px solid #e2e8f0; }
         .student-id { background: white; padding: 15px; border-radius: 12px; margin-bottom: 20px; display: inline-block; border-right: 5px solid var(--primary); text-align: right; min-width: 250px; }
         .score-circle { width: 110px; height: 110px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; border: 8px solid var(--primary); font-size: 24px; font-weight: bold; }
@@ -46,6 +50,11 @@
     </div>
 
     <div id="quiz-screen">
+        <div class="student-header-info">
+            <span>👤 <span id="quiz-student-name"></span></span>
+            <span>🏫 <span id="quiz-student-class"></span></span>
+        </div>
+        
         <div style="margin-bottom: 20px; font-weight: bold; color: var(--danger);">⏳ الوقت: <span id="timer">60</span> ثانية</div>
         <h2 id="q-text"></h2>
         <div id="options-container"></div>
@@ -115,6 +124,11 @@
         const sClass = document.getElementById('student-class').value.trim();
         if(name.split(" ").length < 3) return alert("اكتب اسمك الثلاثي.");
         if(!sClass) return alert("أدخل فصلك.");
+        
+        // تعيين معلومات الطالب في لوحة الأسئلة
+        document.getElementById('quiz-student-name').innerText = name;
+        document.getElementById('quiz-student-class').innerText = sClass;
+        
         shuffle(questions);
         document.getElementById('start-screen').style.display = 'none';
         document.getElementById('quiz-screen').style.display = 'block';
@@ -146,7 +160,7 @@
             };
             container.appendChild(d);
         });
-        timerInterval = setInterval(() => { timeLeft--; document.getElementById('timer').innerText = timeLeft; if(timeLeft<=0) { /* تجاوز الوقت */ currentIdx++; showQuestion(); } }, 1000);
+        timerInterval = setInterval(() => { timeLeft--; document.getElementById('timer').innerText = timeLeft; if(timeLeft<=0) { currentIdx++; showQuestion(); } }, 1000);
     }
 
     function nextQuestion() { document.getElementById('next-btn').style.display='none'; currentIdx++; showQuestion(); }
