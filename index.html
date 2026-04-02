@@ -3,31 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الاختبار التحصيلي الذهبي - الأستاذ إبراهيم الأسمري</title>
+    <title>الاختبار التحصيلي الشامل (50 سؤال) - الأستاذ إبراهيم الأسمري</title>
     <style>
         :root { --primary: #2563eb; --success: #16a34a; --danger: #dc2626; --bg: #f8fafc; --dark: #1e293b; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); display: flex; justify-content: center; padding: 20px; margin: 0; }
-        .container { background: white; width: 100%; max-width: 900px; padding: 40px; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.05); text-align: center; position: relative; overflow: hidden; }
+        .container { background: white; width: 100%; max-width: 900px; padding: 40px; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.05); text-align: center; position: relative; }
         .container::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 8px; background: linear-gradient(90deg, var(--primary), #60a5fa); }
         .teacher-name { color: var(--danger); font-size: 1.6em; font-weight: bold; display: block; margin-top: 10px; }
         .school-name { color: #64748b; font-size: 1.2em; font-weight: 500; display: block; margin-bottom: 15px; }
         .q-counter { background: var(--dark); color: white; padding: 5px 15px; border-radius: 20px; font-size: 14px; margin-bottom: 10px; display: inline-block; }
-        .q-drawing-box { background: white; border: 2px solid #e2e8f0; border-radius: 15px; padding: 15px; margin: 15px auto; max-width: 350px; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
+        .q-drawing-box { background: white; border: 2px solid #e2e8f0; border-radius: 15px; padding: 15px; margin: 15px auto; max-width: 400px; display: flex; align-items: center; justify-content: center; }
         .input-group { margin: 30px auto; max-width: 500px; display: flex; flex-direction: column; gap: 15px; }
-        input[type="text"], select { padding: 18px; border: 2px solid #e2e8f0; border-radius: 16px; font-size: 18px; text-align: center; width: 100%; box-sizing: border-box; }
+        input[type="text"] { padding: 18px; border: 2px solid #e2e8f0; border-radius: 16px; font-size: 18px; text-align: center; width: 100%; box-sizing: border-box; }
         .btn { background: var(--primary); color: white; border: none; padding: 16px 45px; border-radius: 16px; cursor: pointer; font-size: 18px; font-weight: bold; transition: 0.3s; }
-        .student-header-info { background: #eff6ff; padding: 10px; border-radius: 12px; margin-bottom: 15px; color: var(--primary); border: 1px solid #dbeafe; display: flex; justify-content: center; gap: 20px; font-weight: bold; }
+        .option { background: #f8fafc; padding: 16px; width: 95%; max-width: 550px; border-radius: 15px; cursor: pointer; margin: 10px auto; border: 2px solid #e2e8f0; transition: 0.2s; text-align: right; font-weight: 500; }
+        .correct-opt { background: #dcfce7 !important; border-color: var(--success) !important; color: #16a34a; font-weight: bold; }
+        .wrong-opt { background: #fee2e2 !important; border-color: var(--danger) !important; color: #dc2626; font-weight: bold; }
         #feedback-area { display: none; margin: 15px auto; padding: 15px; border-radius: 15px; max-width: 600px; text-align: right; border-right: 5px solid; }
         .fb-success { background: #dcfce7; border-color: #16a34a; color: #15803d; }
         .fb-danger { background: #fee2e2; border-color: #dc2626; color: #b91c1c; }
-        .result-card { background: #f1f5f9; padding: 30px; border-radius: 20px; margin-bottom: 30px; border: 1px solid #e2e8f0; }
-        .score-circle { width: 100px; height: 100px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; border: 6px solid var(--primary); font-size: 22px; font-weight: bold; }
-        .progress-bar { width: 100%; height: 12px; background: #e2e8f0; border-radius: 10px; margin: 20px 0; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--success); width: 0%; transition: width 1.5s ease; }
-        #quiz-screen, #result-screen, #blocked-screen { display: none; }
-        .option { background: #f8fafc; padding: 16px; width: 95%; max-width: 550px; border-radius: 15px; cursor: pointer; margin: 10px auto; border: 2px solid #e2e8f0; transition: 0.2s; text-align: right; }
-        .correct-opt { background: #dcfce7 !important; border-color: var(--success) !important; color: #16a34a; font-weight: bold; }
-        .wrong-opt { background: #fee2e2 !important; border-color: var(--danger) !important; color: #dc2626; font-weight: bold; }
+        #quiz-screen, #result-screen { display: none; }
         table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px; }
         th, td { padding: 12px; border: 1px solid #e2e8f0; text-align: right; }
         th { background: var(--dark); color: white; }
@@ -36,33 +31,20 @@
 <body>
 
 <div class="container">
-    <div id="blocked-screen">
-        <h1 style="color: var(--danger);">تنبيه ⚠️</h1>
-        <p>لقد أديت هذا النموذج مسبقاً.</p>
-    </div>
-
     <div id="start-screen">
-        <h1>الاختبار التحصيلي (فيزياء 1) 🚀</h1>
+        <h1>الاختبار التحصيلي الشامل (فيزياء 1) 🚀</h1>
         <span class="teacher-name">الأستاذ: إبراهيم الأسمري</span>
         <span class="school-name">ثانوية الأمير عبدالمجيد بن عبدالعزيز</span>
         <div class="input-group">
             <input type="text" id="student-name" placeholder="الاسم الثلاثي للطالب">
             <input type="text" id="student-class" placeholder="الفصل">
-            <select id="model-select">
-                <option value="1">نموذج 1 (18 سؤال)</option>
-                <option value="2">نموذج 2 (32 سؤال)</option>
-            </select>
         </div>
-        <button class="btn" onclick="startQuiz()">ابدأ الاختبار</button>
+        <button class="btn" onclick="startQuiz()">ابدأ الاختبار (50 سؤال)</button>
     </div>
 
     <div id="quiz-screen">
-        <div class="student-header-info">
-            <span>👤 <span id="quiz-student-name"></span></span>
-            <span>📝 نموذج <span id="active-model-num"></span></span>
-        </div>
-        <div class="q-counter">سؤال رقم: <span id="current-q-num">1</span> من <span id="total-q-num"></span></div>
-        <div style="margin-bottom: 10px; font-weight: bold; color: var(--danger);">⏳ المتبقي: <span id="timer">60</span> ثانية</div>
+        <div class="q-counter">سؤال: <span id="current-q-num">1</span> من 50</div>
+        <div style="margin-bottom: 10px; font-weight: bold; color: var(--danger);">⏳ الوقت: <span id="timer">60</span> ثانية</div>
         <h2 id="q-text"></h2>
         <div id="drawing-area" class="q-drawing-box" style="display: none;"></div>
         <div id="options-container"></div>
@@ -70,86 +52,102 @@
             <strong id="fb-status"></strong>
             <p id="fb-explanation"></p>
         </div>
-        <button id="next-btn" class="btn" style="display:none; margin-top: 10px;" onclick="nextQuestion()">السؤال التالي ➡️</button>
+        <button id="next-btn" class="btn" style="display:none; margin-top: 15px;" onclick="nextQuestion()">السؤال التالي ➡️</button>
     </div>
 
     <div id="result-screen">
-        <div class="result-card">
-            <div class="score-circle"><span id="res-score-num">0</span></div>
-            <h3>النتيجة النهائية للطالب: <span id="res-name"></span></h3>
-            <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
-        </div>
+        <h2>النتيجة النهائية</h2>
+        <div style="font-size: 24px; font-weight: bold; margin-bottom: 20px;">الطالب: <span id="res-name"></span></div>
+        <div style="font-size: 40px; color: var(--primary); margin-bottom: 20px;"><span id="res-score"></span> / 50</div>
         <div style="overflow-x:auto;">
-            <table>
+            <table id="summary-table">
                 <thead><tr><th>#</th><th>السؤال</th><th>إجابتك</th><th>الصحيحة</th></tr></thead>
                 <tbody id="summary-body"></tbody>
             </table>
         </div>
+        <button class="btn" style="margin-top:20px" onclick="location.reload()">إعادة الاختبار</button>
     </div>
 </div>
 
 <script>
-    let score = 0, currentIdx = 0, log = [], timerInterval, selectedQuestions = [];
+    let score = 0, currentIdx = 0, timerInterval, log = [];
 
+    // الرسومات البرمجية بناءً على الصور المرفقة
     const SVGs = {
-        graph1: `<svg viewBox="0 0 200 150" width="250"><line x1="20" y1="130" x2="180" y2="130" stroke="black" stroke-width="2"/><line x1="20" y1="130" x2="20" y2="10" stroke="black" stroke-width="2"/><path d="M20 130 L160 20" fill="none" stroke="blue" stroke-width="3"/><text x="180" y="145" font-size="12">t(s)</text><text x="5" y="20" font-size="12" writing-mode="tb">d(m)</text></svg>`,
-        graph_v_t: `<svg viewBox="0 0 200 150" width="250"><line x1="20" y1="130" x2="180" y2="130" stroke="black" stroke-width="2"/><line x1="20" y1="130" x2="20" y2="10" stroke="black" stroke-width="2"/><path d="M20 130 L60 80 L120 80 L160 130" fill="none" stroke="red" stroke-width="3"/><text x="180" y="145" font-size="12">t</text><text x="5" y="20" font-size="12">v</text></svg>`,
-        inclined: `<svg viewBox="0 0 200 120" width="250"><path d="M20 100 L180 100 L180 20 Z" fill="#e2e8f0" stroke="black"/><rect x="80" y="55" width="30" height="20" transform="rotate(-25 95 65)" fill="white" stroke="black"/><line x1="95" y1="55" x2="95" y2="20" stroke="red" stroke-width="2" marker-end="url(#arrow)"/></svg>`
+        runners: `<svg viewBox="0 0 200 150" width="300"><line x1="30" y1="120" x2="180" y2="120" stroke="black" stroke-width="2"/><line x1="30" y1="120" x2="30" y2="20" stroke="black" stroke-width="2"/><path d="M30 120 L160 30" fill="none" stroke="blue" stroke-width="3"/><path d="M30 120 L160 70" fill="none" stroke="green" stroke-width="3"/><text x="160" y="135" font-size="10">الزمن (s)</text><text x="5" y="40" font-size="10" transform="rotate(-90 5,40)">الموقع (m)</text></svg>`,
+        standing: `<svg viewBox="0 0 200 150" width="300"><line x1="30" y1="120" x2="180" y2="120" stroke="black"/><line x1="30" y1="120" x2="30" y2="20" stroke="black"/><path d="M30 80 L70 50 L130 50 L170 120" fill="none" stroke="red" stroke-width="3"/><text x="170" y="135" font-size="10">t</text><text x="10" y="30" font-size="10">d</text></svg>`,
+        inclined: `<svg viewBox="0 0 200 150" width="300"><path d="M30 120 L170 120 L170 40 Z" fill="#f1f5f9" stroke="black"/><rect x="80" y="75" width="40" height="20" transform="rotate(-25 100 85)" fill="white" stroke="black"/><line x1="100" y1="80" x2="100" y2="40" stroke="red" stroke-width="2" marker-end="url(#arrow)"/><text x="110" y="45" font-size="12" fill="red">2 (FN)</text></svg>`,
+        projectile: `<svg viewBox="0 0 200 100" width="300"><path d="M20 90 Q100 -20 180 90" fill="none" stroke="purple" stroke-dasharray="5,5"/><circle cx="100" cy="35" r="5" fill="red"/><text x="90" y="30" font-size="10">B</text></svg>`,
+        diffraction: `<svg viewBox="0 0 200 100" width="300"><line x1="50" y1="20" x2="50" y2="45" stroke="black" stroke-width="4"/><line x1="50" y1="55" x2="50" y2="80" stroke="black" stroke-width="4"/><path d="M60 50 Q100 50 150 20 M60 50 Q100 50 150 80" fill="none" stroke="blue" stroke-width="2"/></svg>`
     };
 
-    const model1 = [
-        { q: "علم يدرس الطاقة والمادة والعلاقة بينهما:", options: ["علم الكيمياء", "علم الأحياء", "علم الأرض", "علم الفيزياء"], correct: "علم الفيزياء", fb: "الفيزياء هي العلم الأساسي لدراسة المادة والطاقة." },
-        { q: "أي صيغ العلاقات التالية تكافئ العلاقة T = V.S / m²؟", options: ["m = TV.S", "m² = T.V.S", "m² = V.S / T", "m = V.S / T"], correct: "m² = V.S / T", fb: "باستخدام الضرب التبادلي لترتيب المعادلة." },
-        { q: "تفسير قابل للاختبار:", options: ["الفرضية", "القانون", "المبدأ", "النظرية"], correct: "الفرضية", fb: "الفرضية تخمين علمي يحتاج لتجربة." },
-        { q: "لكي تثبت صحة الفرضية نحتاج إلى:", options: ["التجريب", "الملاحظة", "التحليل", "الاستنتاج"], correct: "التجريب", fb: "التجربة هي الفيصل في صحة الفرضيات." },
+    const questions = [
+        // نموذج 1 (18 سؤال) [cite: 10, 11]
+        { q: "علم يدرس الطاقة والمادة والعلاقة بينهما:", options: ["علم الكيمياء", "علم الأحياء", "علم الأرض", "علم الفيزياء"], correct: "علم الفيزياء", fb: "الفيزياء علم أساسي يدرس التفاعل بين المادة والطاقة." },
+        { q: "أي صيغ العلاقات التالية تكافئ العلاقة T = V.S / m²؟", options: ["m = TV.S", "m² = T.V.S", "m² = V.S / T", "m = V.S / T"], correct: "m² = V.S / T", fb: "بإعادة ترتيب المعادلة رياضياً." },
+        { q: "تفسير قابل للاختبار:", options: ["الفرضية", "القانون", "المبدأ", "النظرية"], correct: "الفرضية", fb: "الفرضية هي تخمين علمي يحتاج لتجربة." },
+        { q: "لكي تثبت صحة الفرضية نحتاج إلى:", options: ["التجريب", "الملاحظة", "التحليل", "الاستنتاج"], correct: "التجريب", fb: "التجربة هي الدليل القاطع في المنهج العلمي." },
         { q: "الطاقة لا تفنى ولا تستحدث من العدم، تمثل:", options: ["نظرية", "قانوناً", "استنتاجاً", "فرضية"], correct: "قانوناً", fb: "هذا هو قانون حفظ الطاقة." },
-        { q: "مقارنة كمية مجهولة بأخرى معيارية:", options: ["القياس", "الدقة", "الضبط", "الطريقة العلمية"], correct: "القياس", fb: "تعريف القياس الفيزيائي." },
-        { q: "دقة قياس الأداة تساوي:", options: ["نصف قيمة أصغر تدريج", "نصف قيمة أكبر تدريج", "قيمة أصغر تدريج", "ضعف التدريج"], correct: "نصف قيمة أصغر تدريج", fb: "قاعدة ثابتة في دقة الأجهزة اليدوية." },
-        { q: "إحدى الكميات التالية كمية فيزيائية متجهة:", options: ["الزمن", "الإزاحة", "الكتلة", "المسافة"], correct: "الإزاحة", fb: "الإزاحة تتطلب مقداراً واتجاهاً." },
-        { q: "الكميات التالية كميات قياسية ما عدا:", options: ["الزمن", "القوة", "درجة الحرارة", "الحجم"], correct: "القوة", fb: "القوة كمية متجهة." },
-        { q: "النظام الدولي يرمز له بالرمز:", options: ["SI", "MI", "TR", "GI"], correct: "SI", fb: "System International." },
-        { q: "وحدة الكمية الأساسية في النظام العالمي:", options: ["التسلا", "الفولت", "الأمبير", "الأوم"], correct: "الأمبير", fb: "الأمبير وحدة أساسية لشدة التيار." },
+        { q: "تفسير علمي لظاهرة بناء على مشاهدات واستقصاءات مع مرور الزمن:", options: ["النظرية العلمية", "القانون العلمي", "الفرضية العلمية", "الحقيقة العلمية"], correct: "النظرية العلمية", fb: "النظرية تفسر 'لماذا' تحدث الظاهرة." },
+        { q: "مقارنة كمية مجهولة بأخرى معيارية:", options: ["القياس", "الدقة", "الضبط", "الطريقة العلمية"], correct: "القياس", fb: "هذا هو التعريف الأساسي للقياس." },
+        { q: "دقة قياس الأداة تساوي:", options: ["نصف قيمة أصغر تدريج", "نصف قيمة أكبر تدريج", "قيمة أصغر تدريج", "ضعف التدريج"], correct: "نصف قيمة أصغر تدريج", fb: "قاعدة ثابتة لضمان دقة القراءة." },
+        { q: "الطريقة الشائعة لاختبار ضبط جهاز تتم عن طريق:", options: ["زاوية النظر", "معايرة النقطة", "معايرة النقطتين", "تصفير الجهاز"], correct: "معايرة النقطتين", fb: "يتم ضبط الصفر ثم نقطة أخرى معيارية." },
+        { q: "إحدى الكميات التالية كمية فيزيائية متجهة:", options: ["الزمن", "الإزاحة", "الكتلة", "المسافة"], correct: "الإزاحة", fb: "الإزاحة تتطلب تحديد المقدار والاتجاه." },
+        { q: "الكميات التالية كميات قياسية ما عدا:", options: ["الزمن", "القوة", "درجة الحرارة", "الحجم"], correct: "القوة", fb: "القوة كمية متجهة (لها اتجاه)." },
+        { q: "النظام الدولي يرمز له بالرمز:", options: ["SI", "MI", "TR", "GI"], correct: "SI", fb: "اختصار لـ System International." },
+        { q: "وحدة الكمية الأساسية في النظام العالمي:", options: ["التسلا", "الفولت", "الأمبير", "الأوم"], correct: "الأمبير", fb: "الأمبير هو وحدة شدة التيار الأساسية." },
         { q: "أي الكميات التالية كمية مشتقة؟", options: ["شدة التيار", "فرق الجهد", "الزمن", "شدة الإضاءة"], correct: "فرق الجهد", fb: "فرق الجهد يشتق من الشغل والشحنة." },
-        { q: "المسافة بين الطائف وجدة 180km، كم تكون بالأمتار؟", options: ["180 × 10³", "1800", "180 × 10⁴", "1.8 × 10⁶"], correct: "180 × 10³", fb: "لتحويل من km إلى m نضرب في 1000." },
-        { q: "كم Hz في 0.6 MHz؟", options: ["6 × 10⁵", "6 × 10⁶", "0.6 × 10⁴", "6 × 10³"], correct: "6 × 10⁵", fb: "الميجا تساوي 10⁶، لذا 0.6 × 10⁶ = 6 × 10⁵." },
-        { q: "أي القيم تساوي 86.2 cm؟", options: ["0.862 m", "8.62 m", "862 mm", "0.0862 km"], correct: "0.862 m", fb: "نقسم على 100 للتحويل لمتر." }
-    ];
+        { q: "إحدى الوحدات التالية وحدة مشتقة:", options: ["S", "Kg", "m", "J"], correct: "J", fb: "الجول (J) هو وحدة الشغل والطاقة وهي مشتقة." },
+        { q: "المسافة بين الطائف وجدة 180km، كم تكون بالأمتار؟", options: ["180 × 10³", "1800", "180 × 10⁴", "180 × 10⁶"], correct: "180 × 10³", fb: "الكيلومتر = 1000 متر." },
+        { q: "كم Hz في 0.6 MHz؟", options: ["6 × 10⁵", "6 × 10⁶", "0.6 × 10⁴", "6 × 10³"], correct: "6 × 10⁵", fb: "الميجا (M) هي مليون (10⁶)." },
+        { q: "أي القيم تساوي 86.2 cm؟", options: ["0.862 m", "8.62 m", "862 mm", "0.0862 km"], correct: "0.862 m", fb: "نقسم على 100 للتحويل لمتر." },
 
-    const model2 = [
-        { q: "بناءً على مسار الشعاع، ما هي الظاهرة الموضحة؟", options: ["الانعكاس", "الانكسار", "الحيود", "الاستقطاب"], correct: "الحيود", fb: "انحناء الضوء حول الحواف يسمى حيوداً." },
-        { q: "الإزاحة تمثل التغير في ........... الجسم في اتجاه معين.", options: ["حركة", "موقع", "سرعة", "تسارع"], correct: "موقع", fb: "الإزاحة هي التغير في الموقع." },
-        { q: "من الرسم البياني المجاور، عند الزمن 4s تكون المسافة الفاصلة بين العدائين:", draw: SVGs.graph1, options: ["20m", "45m", "60m", "10m"], correct: "20m", fb: "نطرح موقع العداء الأول من الثاني عند نفس اللحظة." },
-        { q: "التغير في الموقع مقسوماً على زمن حدوث التغير:", options: ["الإزاحة", "السرعة المتجهة المتوسطة", "التسارع", "الزخم"], correct: "السرعة المتجهة المتوسطة", fb: "هذا تعريف السرعة V = Δd/Δt." },
-        { q: "تسارع جسم تغيرت سرعته بمعدل 30m/s خلال 2s:", options: ["60 m/s²", "15 m/s²", "30 m/s²", "5 m/s²"], correct: "15 m/s²", fb: "a = 30 / 2 = 15." },
-        { q: "قذف جسم رأسياً لأعلى، عند أقصى ارتفاع تكون سرعته:", options: ["أقصى ما يمكن", "تساوي تسارع الجاذبية", "صفراً", "تساوي سرعته الابتدائية"], correct: "صفراً", fb: "يتوقف الجسم لحظياً قبل العودة." },
-        { q: "سقط جسم من أعلى مبنى وبعد 10s وصل للأرض، سرعته لحظة الاصطدام:", options: ["9.8 m/s", "98 m/s", "980 m/s", "صفر"], correct: "98 m/s", fb: "v = g * t = 9.8 * 10 = 98." },
-        { q: "ممانعة الجسم لأي تغيير في حالته تسمى:", options: ["رد الفعل", "الاحتكاك", "القصور الذاتي", "الوزن"], correct: "القصور الذاتي", fb: "قانون نيوتن الأول." },
-        { q: "شخص كتلته على الأرض 100kg، كم كتلته على القمر؟", options: ["صفر", "100 kg", "16.6 kg", "980 kg"], correct: "100 kg", fb: "الكتلة ثابتة لا تتغير بتغير المكان." },
-        { q: "يمثل السهم رقم 2 في الشكل المجاور قوة:", draw: SVGs.inclined, options: ["الجاذبية", "الاحتكاك", "القوة العمودية", "الشد"], correct: "القوة العمودية", fb: "القوة العمودية تكون دائماً عمودية على سطح التلامس." }
+        // نموذج 2 (32 سؤال) [cite: 12, 13]
+        { q: "الإزاحة تمثل التغير في ........... الجسم في اتجاه معين:", options: ["حركة", "موقع", "سرعة", "تسارع"], correct: "موقع", fb: "الإزاحة هي البعد المستقيم بين نقطتي البداية والنهاية." },
+        { q: "من الرسم، عند الزمن 4s تكون المسافة الفاصلة بين العدائين:", draw: SVGs.runners, options: ["20m", "45m", "60m", "110m"], correct: "20m", fb: "نطرح موقع العداء الأول من الثاني عند زمن 4 ثوانٍ." },
+        { q: "بناءً على الرسم، بعد مرور 6s قطع الجسم مسافة:", draw: SVGs.runners, options: ["20m", "30m", "45m", "60m"], correct: "30m", fb: "القراءة المباشرة من الرسم البياني." },
+        { q: "من رسم الطالب والمدرسة، كم مدة وقوف الطالب؟", draw: SVGs.standing, options: ["5s", "10s", "15s", "25s"], correct: "10s", fb: "الفترة الأفقية في الرسم (من 5 إلى 15 ثانية)." },
+        { q: "التغير في الموقع مقسوماً على زمن حدوث التغير:", options: ["الإزاحة", "السرعة المتجهة المتوسطة", "التسارع", "الزخم"], correct: "السرعة المتجهة المتوسطة", fb: "V = Δd / Δt." },
+        { q: "السرعة التي يتحرك بها العداء في الرسم تساوي:", draw: SVGs.runners, options: ["3 m/s", "5 m/s", "15 m/s", "25 m/s"], correct: "5 m/s", fb: "الميل = الفرق في الموقع / الفرق في الزمن." },
+        { q: "التسارع هو التغير في ........... مقسوماً على زمن التغير:", options: ["الموقع", "السرعة المتجهة", "الإزاحة", "المسافة"], correct: "السرعة المتجهة", fb: "a = Δv / Δt." },
+        { q: "تسارع جسم تغيرت سرعته بمعدل 30m/s خلال 2s:", options: ["60 m/s²", "15 m/s²", "30 m/s²", "5 m/s²"], correct: "15 m/s²", fb: "30 / 2 = 15." },
+        { q: "تحرك جسم بسرعة تزداد بمقدار 2m/s في كل ثانية، هذا يعني أن:", options: ["المسافة=2m", "السرعة=2m/s", "التسارع=2m/s²", "الزمن=2s"], correct: "التسارع=2m/s²", fb: "هذا تعريف التسارع المنتظم." },
+        { q: "سيارة تزداد سرعتها من 4m/s إلى 36m/s خلال 4s، تسارعها:", options: ["7", "8", "9", "10"], correct: "8", fb: "(36-4) / 4 = 32 / 4 = 8." },
+        { q: "سيارة A تسارعت من 10 لـ 30 خلال 4s، وسيارة B من 22 لـ 33 خلال 11s:", options: ["أكبر من", "أصغر من", "يساوي", "نصف"], correct: "أكبر من", fb: "تسارع A هو 5، وتسارع B هو 1." },
+        { q: "الجسم النقطي الذي تزداد المسافات بين نقاطه:", options: ["يتسارع", "يتباطأ", "سرعته ثابتة", "متزن"], correct: "يتسارع", fb: "زيادة المسافة في نفس الزمن تعني زيادة السرعة." },
+        { q: "تتحرك سيارة من السكون بتسارع 2.5m/s²، سرعتها بعد 10s:", options: ["0.25", "25", "5", "50"], correct: "25", fb: "v = a * t = 2.5 * 10 = 25." },
+        { q: "تسير سيارة بسرعة 30m/s ثم تتباطأ بمعدل 6m/s²، سرعتها بعد 4s:", options: ["6", "26", "36", "54"], correct: "6", fb: "30 - (6 * 4) = 30 - 24 = 6." },
+        { q: "بدأ جسم من السكون بتسارع 5m/s²، سرعته بعد قطع 10m:", options: ["2", "5", "8", "10"], correct: "10", fb: "استخدام معادلة الحركة الثالثة." },
+        { q: "عند قذف جسم لأعلى، فإنه عند أقصى ارتفاع:", options: ["يتوقف لحظياً", "تسارعه يتناقص", "تسارعه موجب", "سرعته أقصى ما يمكن"], correct: "يتوقف لحظياً", fb: "تصبح السرعة صفراً قبل السقوط." },
+        { q: "سقط جسم من مبنى ووصل للأرض بعد 10s، سرعة الاصطدام:", options: ["9.8", "98", "980", "صفر"], correct: "98", fb: "v = g * t = 9.8 * 10 = 98." },
+        { q: "الزمن اللازم لعودة ماء نافورة قذف للأعلى بسرعة 30m/s:", options: ["0.5", "3", "6", "12"], correct: "6", fb: "3 ثوانٍ للصعود و3 للهبوط." },
+        { q: "ممانعة الجسم لأي تغيير في حالته:", options: ["رد الفعل", "حفظ الزخم", "الاحتكاك", "القصور الذاتي"], correct: "القصور الذاتي", fb: "قانون نيوتن الأول." },
+        { q: "سقوط راكب من على دراجته عند توقفه فجأة مثال على:", options: ["رد الفعل", "حفظ الزخم", "الاحتراق", "القصور الذاتي"], correct: "القصور الذاتي", fb: "الجسم يحاول الاستمرار في حركته." },
+        { q: "أثرت قوة 100N على جسم كتلته 20kg، تسارعه:", options: ["0.2", "2", "5", "9.8"], correct: "5", fb: "a = F / m = 100 / 20 = 5." },
+        { q: "شخص كتلته على الأرض 100kg، كتلته على القمر:", options: ["0", "100 kg", "160 kg", "980 kg"], correct: "100 kg", fb: "الكتلة مقدار ثابت لا يتغير بتغير الجاذبية." },
+        { q: "ذهب محمد شرقاً 20m وعاد غرباً 15m، المسافة والإزاحة:", options: ["5m إزاحة و35m مسافة", "5m إزاحة و5m مسافة", "35m إزاحة و5m مسافة", "35m إزاحة و35m مسافة"], correct: "5m إزاحة و35m مسافة", fb: "المسافة هي المجموع، والإزاحة هي الفرق." },
+        { q: "في الشكل، السهم رقم 2 يمثل القوة:", draw: SVGs.inclined, options: ["الجاذبية", "الاحتكاك", "العمودية", "الشد"], correct: "العمودية", fb: "القوة التي يؤثر بها السطح عمودياً للأعلى." },
+        { q: "عند أقصى ارتفاع للمقذوف (النقطة B)، السرعة الرأسية:", draw: SVGs.projectile, options: ["أكبر ما يمكن", "تساوي السرعة الأفقية", "صفراً", "تساوي الجاذبية"], correct: "صفراً", fb: "السرعة الرأسية Vy تنعدم عند القمة." },
+        { q: "أطلقت قذيفة بزاوية 30 وبسرعة 39.2m/s، زمن الوصول لأقصى ارتفاع:", options: ["1", "2", "3", "4"], correct: "2", fb: "t = (v * sin 30) / g." },
+        { q: "نحلة على بعد 2m من المركز وسرعتها 3m/s، تسارعها المركزي:", options: ["18", "6", "4.5", "1.5"], correct: "4.5", fb: "ac = v² / r = 9 / 2 = 4.5." },
+        { q: "بناءً على مسار الشعاع، ما هي الظاهرة الموضحة؟", draw: SVGs.diffraction, options: ["الانعكاس", "الانكسار", "الحيود", "الاستقطاب"], correct: "الحيود", fb: "انحناء الضوء حول الحواف يسمى حيوداً." },
+        { q: "أي نوع من المرايا يعطي دائماً صورة خيالية ومعكوسة جانبياً؟", options: ["المستوية", "المقعرة", "المحدبة", "الكروية"], correct: "المستوية", fb: "خصائص الصورة في المرآة المستوية." },
+        { q: "يدفع طالب ورقة كتلتها 10kg ومعامل احتكاكها 0.2، قوة الاحتكاك:", options: ["10 N", "20 N", "25 N", "100 N"], correct: "20 N", fb: "Ff = μ * m * g = 0.2 * 10 * 10 = 20." },
+        { q: "حبل كتلته 0.5kg شد بقوتين فتحرك يميناً بتسارع 2m/s²، القوة F:", options: ["22", "19", "12", "10"], correct: "11", fb: "F - F_other = m * a." },
+        { q: "الجهاز المستخدم لقياس فرق الجهد الكهربائي:", options: ["الأوميتر", "الفولتمتر", "الأميتر", "البارومتر"], correct: "الفولتمتر", fb: "الفولتمتر يوصل على التوازي لقياس الجهد." }
     ];
 
     function startQuiz() {
         const name = document.getElementById('student-name').value.trim();
-        const modelId = document.getElementById('model-select').value;
-        if(name.split(" ").length < 3) return alert("يرجى كتابة الاسم الثلاثي.");
-        
-        document.getElementById('quiz-student-name').innerText = name;
-        document.getElementById('active-model-num').innerText = modelId;
-        
-        selectedQuestions = (modelId === "1") ? [...model1] : [...model2];
-        shuffle(selectedQuestions);
-        
-        document.getElementById('total-q-num').innerText = selectedQuestions.length;
+        if(name.split(" ").length < 3) return alert("يرجى كتابة اسمك الثلاثي.");
         document.getElementById('start-screen').style.display = 'none';
         document.getElementById('quiz-screen').style.display = 'block';
         showQuestion();
     }
 
     function showQuestion() {
-        clearInterval(timerInterval);
-        if(currentIdx >= selectedQuestions.length) return finishQuiz();
-        
-        const q = selectedQuestions[currentIdx];
+        if(currentIdx >= questions.length) return finishQuiz();
+        const q = questions[currentIdx];
         document.getElementById('current-q-num').innerText = currentIdx + 1;
         document.getElementById('q-text').innerText = q.q;
         
@@ -157,19 +155,24 @@
         if(q.draw) { drawArea.innerHTML = q.draw; drawArea.style.display = 'flex'; }
         else { drawArea.style.display = 'none'; }
 
-        let timeLeft = 60; document.getElementById('timer').innerText = timeLeft;
         document.getElementById('feedback-area').style.display = 'none';
         document.getElementById('next-btn').style.display = 'none';
         
-        let opts = [...q.options]; shuffle(opts);
         const container = document.getElementById('options-container');
         container.innerHTML = "";
-        opts.forEach(o => {
-            const d = document.createElement('div'); d.className = 'option'; d.innerText = o;
-            d.onclick = () => checkAnswer(o, d, q);
-            container.appendChild(d);
+        q.options.forEach(o => {
+            const btn = document.createElement('div'); btn.className = 'option'; btn.innerText = o;
+            btn.onclick = () => checkAnswer(o, btn, q);
+            container.appendChild(btn);
         });
-        timerInterval = setInterval(() => { timeLeft--; document.getElementById('timer').innerText = timeLeft; if(timeLeft<=0) checkAnswer(null, null, q); }, 1000);
+
+        let timeLeft = 60;
+        document.getElementById('timer').innerText = timeLeft;
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            timeLeft--; document.getElementById('timer').innerText = timeLeft;
+            if(timeLeft <= 0) { clearInterval(timerInterval); checkAnswer(null, null, q); }
+        }, 1000);
     }
 
     function checkAnswer(selected, el, qObj) {
@@ -177,17 +180,18 @@
         const isCorrect = selected === qObj.correct;
         if(isCorrect) score++;
         log.push({q: qObj.q, user: selected || "انتهى الوقت", correct: qObj.correct, status: isCorrect});
-        
+
         document.querySelectorAll('.option').forEach(opt => {
             opt.style.pointerEvents = 'none';
             if(opt.innerText === qObj.correct) opt.classList.add('correct-opt');
             if(selected && opt.innerText === selected && !isCorrect) opt.classList.add('wrong-opt');
         });
-        
-        document.getElementById('feedback-area').style.display = 'block';
-        document.getElementById('feedback-area').className = isCorrect ? 'fb-success' : 'fb-danger';
-        document.getElementById('fb-status').innerText = isCorrect ? "صحيح ✅" : "خطأ ❌";
-        document.getElementById('fb-explanation').innerText = "توضيح: " + qObj.fb;
+
+        const fb = document.getElementById('feedback-area');
+        fb.style.display = 'block';
+        fb.className = isCorrect ? 'fb-success' : 'fb-danger';
+        document.getElementById('fb-status').innerText = isCorrect ? "إجابة صحيحة ✅" : "إجابة خاطئة ❌";
+        document.getElementById('fb-explanation').innerText = qObj.fb;
         document.getElementById('next-btn').style.display = 'inline-block';
     }
 
@@ -197,17 +201,12 @@
         document.getElementById('quiz-screen').style.display = 'none';
         document.getElementById('result-screen').style.display = 'block';
         document.getElementById('res-name').innerText = document.getElementById('student-name').value;
-        document.getElementById('res-score-num').innerText = score + " / " + selectedQuestions.length;
-        const perc = (score / selectedQuestions.length) * 100;
-        document.getElementById('progress-fill').style.width = perc + "%";
-        
+        document.getElementById('res-score').innerText = score;
         const body = document.getElementById('summary-body');
-        log.forEach((l, i) => {
-            body.innerHTML += `<tr><td>${i+1}</td><td>${l.q}</td><td style="color:${l.status?'green':'red'}">${l.user}</td><td>${l.correct}</td></tr>`;
+        log.forEach((item, i) => {
+            body.innerHTML += `<tr><td>${i+1}</td><td>${item.q}</td><td style="color:${item.status?'green':'red'}">${item.user}</td><td>${item.correct}</td></tr>`;
         });
     }
-
-    function shuffle(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; } }
 </script>
 </body>
 </html>
