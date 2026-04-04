@@ -2,193 +2,218 @@
 <html dir="rtl" lang="ar">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الاختبار التحصيلي الشامل - الأستاذ إبراهيم الأسمري</title>
     <style>
-        :root { --primary: #2c3e50; --accent: #e74c3c; --success: #27ae60; --light: #f4f7f6; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--light); margin: 0; padding: 20px; display: flex; justify-content: center; }
-        .quiz-box { background: white; width: 100%; max-width: 900px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; }
-        .header { background: var(--primary); color: white; padding: 25px; text-align: center; }
-        .content { padding: 30px; }
-        .input-group { display: flex; gap: 15px; margin-bottom: 20px; justify-content: center; }
-        input[type="text"] { padding: 12px; border: 2px solid #ddd; border-radius: 8px; width: 40%; font-size: 16px; }
-        .q-card { display: none; text-align: right; }
-        .q-text { font-size: 1.25em; font-weight: bold; color: #333; margin-bottom: 20px; line-height: 1.6; }
-        .img-frame { background: white; border: 2px solid #eee; border-radius: 10px; padding: 15px; margin: 20px auto; display: flex; justify-content: center; max-width: 100%; }
-        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .opt { padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; cursor: pointer; transition: 0.3s; background: #fff; text-align: center; font-size: 1.1em; }
-        .opt:hover { border-color: var(--primary); background: #f0f4f8; }
-        .correct { background: #d4edda !important; border-color: var(--success) !important; color: #155724; font-weight: bold; }
-        .wrong { background: #f8d7da !important; border-color: var(--accent) !important; color: #721c24; }
-        .nav-btns { margin-top: 30px; display: flex; justify-content: space-between; align-items: center; }
-        .btn-start { background: var(--success); color: white; padding: 15px 40px; border: none; border-radius: 8px; font-size: 1.2em; cursor: pointer; }
-        .btn-next { background: var(--primary); color: white; padding: 10px 30px; border: none; border-radius: 8px; cursor: pointer; display: none; }
-        #timer { font-weight: bold; color: var(--accent); font-size: 1.2em; }
+        :root { --primary: #1a56db; --danger: #e02424; --success: #057a55; --bg: #f9fafb; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); display: flex; justify-content: center; padding: 20px; margin: 0; }
+        .quiz-container { background: white; width: 100%; max-width: 850px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); padding: 30px; }
+        .header { text-align: center; border-bottom: 3px solid var(--primary); padding-bottom: 20px; margin-bottom: 30px; }
+        .input-group { display: flex; gap: 15px; margin: 20px 0; justify-content: center; }
+        input { padding: 12px; border: 2px solid #ddd; border-radius: 8px; width: 45%; font-size: 16px; text-align: center; }
+        .q-card { display: none; }
+        .q-text { font-size: 1.4em; font-weight: bold; margin-bottom: 20px; color: #1f2937; line-height: 1.5; }
+        .image-box { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 15px; margin: 20px auto; display: flex; justify-content: center; }
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+        .opt { padding: 15px; border: 2px solid #f3f4f6; border-radius: 12px; cursor: pointer; transition: 0.2s; background: #f9fafb; text-align: center; font-weight: 500; }
+        .opt:hover { border-color: var(--primary); background: #ebf5ff; }
+        .correct { background: #def7ec !important; border-color: var(--success) !important; color: #03543f; }
+        .wrong { background: #fde8e8 !important; border-color: var(--danger) !important; color: #9b1c1c; }
+        .footer { margin-top: 30px; display: flex; justify-content: space-between; align-items: center; }
+        .btn { padding: 12px 30px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1.1em; }
+        .btn-next { background: var(--primary); color: white; display: none; }
+        #timer { color: var(--danger); font-weight: bold; font-size: 1.2em; }
     </style>
 </head>
 <body>
 
-<div class="quiz-box">
-    <div class="header">
-        <h1>الاختبار التحصيلي الشامل (50 سؤال)</h1>
-        <p>إشراف الأستاذ: إبراهيم الأسمري</p>
+<div class="quiz-container">
+    <div id="start-screen" style="text-align: center;">
+        <div class="header">
+            <h1>بنك الأسئلة التحصيلي الذهبي 50 سؤالاً</h1>
+            <h2 style="color: var(--danger);">إشراف الأستاذ: إبراهيم الأسمري</h2>
+        </div>
+        <p>يرجى إدخال البيانات لبدء الاختبار</p>
+        <div class="input-group">
+            <input type="text" id="student-name" placeholder="الاسم الثلاثي للطالب">
+            <input type="text" id="student-class" placeholder="الفصل">
+        </div>
+        <button class="btn" style="background: var(--success); color: white;" onclick="startQuiz()">ابدأ الاختبار الآن 🚀</button>
     </div>
 
-    <div class="content">
-        <div id="start-page" style="text-align: center;">
-            <h2>بيانات الطالب</h2>
-            <div class="input-group">
-                <input type="text" id="stu-name" placeholder="الاسم الثلاثي">
-                <input type="text" id="stu-class" placeholder="الفصل">
-            </div>
-            <button class="btn-start" onclick="beginQuiz()">ابدأ الاختبار 🚀</button>
+    <div id="quiz-screen" style="display: none;">
+        <div style="display: flex; justify-content: space-between; font-weight: bold; color: #6b7280; margin-bottom: 10px;">
+            <span>السؤال: <span id="q-count">1</span> / 50</span>
+            <span id="timer">60</span>
         </div>
+        <div id="display-area"></div>
+        <div class="footer">
+            <button id="next-btn" class="btn btn-next" onclick="nextQuestion()">السؤال التالي ⬅️</button>
+        </div>
+    </div>
 
-        <div id="quiz-page" style="display: none;">
-            <div style="display: flex; justify-content: space-between; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 20px;">
-                <span>السؤال: <span id="q-num">1</span> / 50</span>
-                <span id="timer">60</span>
-            </div>
-            <div id="display-area"></div>
-            <div class="nav-btns">
-                <button id="next-btn" class="btn-next" onclick="goNext()">السؤال التالي ⬅️</button>
-            </div>
-        </div>
-
-        <div id="result-page" style="display: none; text-align: center;">
-            <h2 id="final-msg"></h2>
-            <div id="final-score" style="font-size: 3em; color: var(--primary); margin: 20px 0;"></div>
-            <button class="btn-start" onclick="location.reload()">إعادة الاختبار</button>
-        </div>
+    <div id="result-screen" style="display: none; text-align: center;">
+        <h2 id="student-res-name"></h2>
+        <div style="font-size: 3.5em; color: var(--primary); margin: 20px 0;"><span id="final-score"></span> / 50</div>
+        <button class="btn" style="background: var(--primary); color: white;" onclick="location.reload()">إعادة المحاولة</button>
     </div>
 </div>
 
 <script>
-    // تم إعداد الـ 50 سؤالاً بناءً على مستنداتك وصورك
-    const bank = [
-        { q: "علم يدرس الطاقة والمادة والعلاقة بينهما ..", opts: ["الكيمياء", "الأحياء", "الأرض", "الفيزياء"], ans: 3 },
+    const questions = [
+        // القسم الأول: 18 سؤالاً
+        { q: "علم يدرس الطاقة والمادة والعلاقة بينهما ..", opts: ["علم الكيمياء", "علم الأحياء", "علم الأرض", "علم الفيزياء"], ans: 3 },
         { q: "أي صيغ العلاقات التالية تكافئ العلاقة T = V.S / m² ؟", opts: ["m = TV.S", "m² = T.V.S", "m² = V.S / T", "m = V.S / T"], ans: 2 },
         { q: "تفسير قابل للاختبار .", opts: ["الفرضية", "القانون", "المبدأ", "النظرية"], ans: 0 },
+        { q: "لكي تثبت صحة الفرضية نحتاج إلى ..", opts: ["التجريب", "الملاحظة", "التحليل", "الاستنتاج"], ans: 0 },
+        { q: "الطاقة التي لا تفنى ولا تستحدث من العدم، تمثل ..", opts: ["نظرية", "قانوناً", "استنتاجاً", "فرضية"], ans: 1 },
+        { q: "تفسير علمي لظاهرة بناء على مشاهدات واستقصاءات مع مرور الزمن ..", opts: ["النظرية العلمية", "القانون العلمي", "الفرضية العلمية", "الحقيقة العلمية"], ans: 0 },
+        { q: "مقارنة كمية مجهولة بأخرى معيارية ..", opts: ["القياس", "الدقة", "الضبط", "الطريقة العلمية"], ans: 0 },
         { q: "دقة قياس الأداة تساوي ..", opts: ["قيمة أصغر تدريج", "نصف قيمة أصغر تدريج", "ضعف التدريج", "الصفر"], ans: 1 },
-        { q: "كم Hz في 0.6 MHz؟", opts: ["6x10⁵", "6x10⁶", "0.6x10⁴", "6x10³"], ans: 0 },
-        // سؤال 20 - رسم العدائين (لقطة الشاشة 26) مع كافة البيانات
-        {
-            q: "من الرسم البياني: عند الزمن 4s تكون المسافة الفاصلة بين العدائين بالامتار ..",
+        { q: "الطريقة الشائعة لاختبار ضبط جهاز تتم عن طريق معايرة ..", opts: ["زاوية النظر", "النقطة", "النقطتين", "تصفير الجهاز"], ans: 2 },
+        { q: "إحدى الكميات التالية كمية فيزيائية متجهة ..", opts: ["الزمن", "الإزاحة", "الكتلة", "المسافة"], ans: 1 },
+        { q: "الكميات التالية كميات قياسية ما عدا ..", opts: ["الزمن", "القوة", "درجة الحرارة", "الحجم"], ans: 1 },
+        { q: "النظام الدولي يرمز له بالرمز ..", opts: ["SI", "MI", "TR", "GI"], ans: 0 },
+        { q: "وحدة الكمية الأساسية في النظام العالمي لشـدة التيار هي ..", opts: ["التسلا", "الفولت", "الأمبير", "الأوم"], ans: 2 },
+        { q: "أي الكميات التالية كمية مشتقة ؟", opts: ["شدة التيار", "فرق الجهد", "الزمن", "شدة الإضاءة"], ans: 1 },
+        { q: "إحدى الوحدات التالية وحدة مشتقة :", opts: ["S", "Kg", "m", "J"], ans: 3 },
+        { q: "المسافة بين الطائف وجدة 180 km ، كم تكون بالأمتار ؟", opts: ["180 × 10³", "1800", "180 × 10⁴", "180 × 10⁶"], ans: 0 },
+        { q: "كم Hz في 0.6 MHz ؟", opts: ["6 × 10⁵", "6 × 10⁶", "0.6 × 10⁴", "6 × 10³"], ans: 0 },
+        { q: "أي القيم تساوي 86.2 cm ؟", opts: ["0.862 m", "8.62 m", "862 mm", "0.0862 km"], ans: 0 },
+
+        // القسم الثاني: 32 سؤالاً (تبدأ من 1-2)
+        { 
+            q: "من الرسم البياني: عند الزمن 4s تكون المسافة الفاصلة بين العدائين بالامتار ..", 
             img: `<svg viewBox="0 0 200 180" width="350">
-                <line x1="30" y1="150" x2="190" y2="150" stroke="black" stroke-width="2"/>
-                <line x1="30" y1="150" x2="30" y2="20" stroke="black" stroke-width="2"/>
-                <path d="M30 150 L160 30" stroke="blue" stroke-width="3" fill="none"/>
-                <path d="M30 150 L190 70" stroke="green" stroke-width="3" fill="none"/>
-                <text x="180" y="165" font-size="9">t(s)</text>
-                <text x="10" y="20" font-size="9" transform="rotate(-90,10,20)">d(m)</text>
-                <text x="60" y="160" font-size="8">1</text><text x="90" y="160" font-size="8">2</text>
-                <text x="120" y="160" font-size="8">3</text><text x="150" y="160" font-size="8">4</text>
-                <text x="10" y="130" font-size="8">20</text><text x="10" y="110" font-size="8">40</text>
-                <text x="10" y="90" font-size="8">60</text>
-            </svg>`,
-            opts: ["20", "45", "60", "110"],
-            ans: 0
+                    <line x1="30" y1="150" x2="190" y2="150" stroke="#000" stroke-width="2"/>
+                    <line x1="30" y1="150" x2="30" y2="20" stroke="#000" stroke-width="2"/>
+                    <path d="M30 150 L160 30" stroke="blue" stroke-width="2" fill="none"/>
+                    <path d="M30 150 L190 70" stroke="green" stroke-width="2" fill="none"/>
+                    <text x="180" y="165" font-size="9">t(s)</text><text x="5" y="20" font-size="9">d(m)</text>
+                    <text x="60" y="160" font-size="8">1</text><text x="90" y="160" font-size="8">2</text>
+                    <text x="120" y="160" font-size="8">3</text><text x="155" y="160" font-size="8">4</text>
+                    <text x="5" y="130" font-size="8">20</text><text x="5" y="110" font-size="8">40</text>
+                    <text x="5" y="90" font-size="8">60</text>
+                  </svg>`,
+            opts: ["20", "45", "60", "110"], ans: 0 
         },
-        // سؤال الطالب والمدرسة (لقطة الشاشة 27)
-        {
-            q: "الرسم البياني يمثل حركة طالب بالنسبة لمدرسته، كم مدة وقوف الطالب؟",
+        { 
+            q: "من الرسم البياني: كم مدة وقوف الطالب ؟", 
             img: `<svg viewBox="0 0 200 150" width="300">
-                <line x1="30" y1="130" x2="180" y2="130" stroke="black"/>
-                <line x1="30" y1="130" x2="30" y2="20" stroke="black"/>
-                <polyline points="30,50 60,80 120,80 170,130" fill="none" stroke="red" stroke-width="3"/>
-                <text x="60" y="145" font-size="8">5</text><text x="120" y="145" font-size="8">15</text>
-                <text x="10" y="85" font-size="8">20</text>
-            </svg>`,
-            opts: ["5 s", "10 s", "15 s", "20 s"],
-            ans: 1
+                    <line x1="30" y1="130" x2="180" y2="130" stroke="black"/>
+                    <polyline points="30,50 60,80 120,80 170,130" fill="none" stroke="red" stroke-width="2"/>
+                    <text x="60" y="145" font-size="8">5</text><text x="120" y="145" font-size="8">15</text>
+                    <text x="10" y="85" font-size="8">20</text>
+                  </svg>`,
+            opts: ["5 s", "10 s", "15 s", "25 s"], ans: 1 
         },
-        // سؤال القوة العمودية (لقطة الشاشة 30)
-        {
-            q: "ينزلق جسم وزنه W على سطح مائل، أي سهم يمثل القوة العمودية؟",
+        { 
+            q: "في الشكل المجاور، السهم رقم (2) يمثل قوة:", 
             img: `<svg viewBox="0 0 200 150" width="300">
-                <path d="M30 130 L170 130 L170 50 Z" fill="#eee" stroke="black"/>
-                <rect x="80" y="75" width="40" height="20" transform="rotate(-25 100 85)" fill="white" stroke="black"/>
-                <line x1="100" y1="80" x2="100" y2="30" stroke="red" stroke-width="2" marker-end="url(#arrow)"/>
-                <text x="105" y="35" font-weight="bold">2</text>
-                <line x1="100" y1="85" x2="130" y2="120" stroke="blue" stroke-width="2"/>
-                <text x="135" y="115" font-weight="bold">3</text>
-            </svg>`,
-            opts: ["1", "2", "3", "4"],
-            ans: 1
+                    <path d="M30 120 L170 120 L170 40 Z" fill="#eee" stroke="#000"/>
+                    <rect x="80" y="75" width="40" height="20" transform="rotate(-25 100 85)" fill="white" stroke="black"/>
+                    <line x1="100" y1="80" x2="100" y2="40" stroke="red" stroke-width="2"/>
+                    <text x="105" y="35" font-weight="bold">2</text>
+                    <line x1="100" y1="85" x2="100" y2="130" stroke="blue" stroke-width="2"/>
+                    <text x="105" y="125" font-weight="bold">4</text>
+                  </svg>`,
+            opts: ["الاحتكاك", "الوزن", "القوة العمودية", "قوة الشد"], ans: 2 
         },
-        // سؤال المقذوف (لقطة الشاشة 32)
-        {
-            q: "في الشكل المجاور عند أي نقطة تكون السرعة الرأسية صفراً؟",
+        { 
+            q: "يمثل الشكل المجاور حركة مقذوف، عند أي نقطة تكون السرعة الرأسية صفراً؟", 
             img: `<svg viewBox="0 0 200 100" width="350">
-                <path d="M20 80 Q100 -20 180 80" stroke="black" stroke-dasharray="4" fill="none"/>
-                <circle cx="25" cy="75" r="4" fill="red"/><text x="20" y="90">A</text>
-                <circle cx="100" cy="30" r="4" fill="red"/><text x="95" y="20">B</text>
-                <circle cx="175" cy="75" r="4" fill="red"/><text x="170" y="90">C</text>
-            </svg>`,
-            opts: ["A", "B", "C", "A و C"],
-            ans: 1
+                    <path d="M20 80 Q100 -20 180 80" stroke="black" stroke-dasharray="4" fill="none"/>
+                    <circle cx="25" cy="75" r="4" fill="red"/><text x="20" y="90">A</text>
+                    <circle cx="100" cy="30" r="4" fill="red"/><text x="95" y="20">B</text>
+                    <circle cx="175" cy="75" r="4" fill="red"/><text x="170" y="90">C</text>
+                  </svg>`,
+            opts: ["A", "B", "C", "A و C"], ans: 1 
         },
+        { q: "التغير في الموقع مقسوماً على زمن حدوث التغير يمثل :", opts: ["الإزاحة", "السرعة المتجهة المتوسطة", "التسارع", "الزخم"], ans: 1 },
+        { q: "سيارة تزداد سرعتها من 4 m/s إلى 36 m/s خلال 4 s ، تسارعها يساوي :", opts: ["7", "8", "9", "10"], ans: 1 },
         { q: "شخص كتلته على الأرض 100 kg، كتلته على القمر:", opts: ["0", "100 kg", "160 kg", "980 kg"], ans: 1 },
-        { q: "الجهاز المستخدم لقياس فرق الجهد الكهربائي:", opts: ["الأوميتر", "الفولتمتر", "الأميتر", "البارومتر"], ans: 1 }
-        // ... سيتم توليد الـ 50 سؤالاً بنفس التنسيق الدقيق
+        { q: "الجسم النقطي الذي تزداد المسافات بين نقاطه :", opts: ["يتسارع", "يتباطأ", "يسير بسرعة ثابتة", "متزن"], ans: 0 },
+        { q: "سقط جسم من مبنى وبعد 10 s وصل للأرض، سرعة لحظة اصطدامه :", opts: ["9.8", "98", "980", "0"], ans: 1 },
+        { q: "القصور الذاتي مثال على قانون نيوتن :", opts: ["الأول", "الثاني", "الثالث", "الجذب العام"], ans: 0 },
+        { q: "أثرت قوة 100 N على جسم كتلته 20 kg، تسارعه :", opts: ["0.2", "2", "5", "2000"], ans: 2 },
+        { q: "ذهب محمد شرقاً 20 m ثم عاد غرباً 15 m، إزاحته تساوي :", opts: ["5 m غرباً", "5 m شرقاً", "35 m", "0"], ans: 1 },
+        { q: "الجهاز المستخدم لقياس فرق الجهد الكهربائي :", opts: ["الأوميتر", "الفولتمتر", "الأميتر", "البارومتر"], ans: 1 },
+        { q: "أطلقت قذيفة بزاوية 30 وبسرعة 39.2 m/s، زمن الصعود لأقصى ارتفاع :", opts: ["1", "2", "3", "4"], ans: 1 },
+        { q: "نحلة على بعد 2 m من المركز وسرعتها 3 m/s، تسارعها المركزي :", opts: ["1.5", "4.5", "6", "18"], ans: 1 },
+        { q: "انحناء الضوء حول الحواف يمثل ظاهرة :", opts: ["الانعكاس", "الانكسار", "الحيود", "الاستقطاب"], ans: 2 },
+        { q: "مرايا تستخدم في جوانب السيارات لزيادة مجال الرؤية :", opts: ["المستوية", "المقعرة", "المحدبة", "الأسطوانية"], ans: 2 },
+        { q: "يدفع طالب صندوقاً كتلته 10 kg ومعامل الاحتكاك 0.2 ، قوة الاحتكاك :", opts: ["2 N", "10 N", "19.6 N", "20 N"], ans: 2 },
+        { q: "إذا تحركت السيارة بسرعة ثابتة، فإن تسارعها يساوي :", opts: ["9.8", "ثابت", "متغير", "صفر"], ans: 3 },
+        { q: "الميل في منحنى (الموقع - الزمن) يمثل :", opts: ["التسارع", "السرعة", "القوة", "الإزاحة"], ans: 1 },
+        { q: "الميل في منحنى (السرعة - الزمن) يمثل :", opts: ["المسافة", "التسارع", "القوة", "الزمن"], ans: 1 },
+        { q: "قوة تجذب الأجسام نحو بعضها البعض :", opts: ["الاحتكاك", "الشد", "الجاذبية", "العمودية"], ans: 2 },
+        { q: "وحدة قياس القوة في النظام الدولي هي :", opts: ["الواط", "الجول", "النيوتن", "الباسكال"], ans: 2 },
+        { q: "عند غياب القوى الخارجية، يظل الجسم على حالته :", opts: ["قانون نيوتن 1", "قانون نيوتن 2", "قانون نيوتن 3", "حفظ الزخم"], ans: 0 },
+        { q: "الفعل ورد الفعل قوتان متساويتان في المقدار ومتعاكستان :", opts: ["نيوتن 1", "نيوتن 2", "نيوتن 3", "أرخميدس"], ans: 2 },
+        { q: "حركة الجسم تحت تأثير الجاذبية فقط مع إهمال الهواء :", opts: ["المقذوف", "السقوط الحر", "الحركة الدائرية", "الاهتزاز"], ans: 1 },
+        { q: "ثابت الجاذبية الأرضية g يساوي تقريباً :", opts: ["8.9", "9.8", "1.6", "10"], ans: 1 },
+        { q: "السرعة هي كمية :", opts: ["متجهة", "أساسية", "قياسية", "ثابتة دائماً"], ans: 0 },
+        { q: "تُقاس المسافة بوحدة :", opts: ["m/s", "m/s²", "m", "kg"], ans: 2 },
+        { q: "تُقاس الكتلة بوحدة :", opts: ["m", "kg", "N", "s"], ans: 1 },
+        { q: "الأداة المستخدمة لقياس الوقت هي :", opts: ["الميزان", "المسطرة", "ساعة الإيقاف", "المنقلة"], ans: 2 },
+        { q: "ما هي الحالة التي يكون فيها التسارع سالباً ؟", opts: ["زيادة السرعة", "نقص السرعة", "السرعة الثابتة", "السكون"], ans: 1 }
     ];
 
     let current = 0, score = 0, timer;
 
-    function beginQuiz() {
-        if(!document.getElementById('stu-name').value || !document.getElementById('stu-class').value) 
-            return alert("الرجاء إكمال البيانات");
-        document.getElementById('start-page').style.display = 'none';
-        document.getElementById('quiz-page').style.display = 'block';
-        renderQuestion();
+    function startQuiz() {
+        if(!document.getElementById('student-name').value) return alert("أدخل اسمك أولاً");
+        document.getElementById('start-screen').style.display = 'none';
+        document.getElementById('quiz-screen').style.display = 'block';
+        showQuestion();
     }
 
-    function renderQuestion() {
-        const q = bank[current];
-        document.getElementById('q-num').innerText = current + 1;
+    function showQuestion() {
+        const q = questions[current];
+        document.getElementById('q-count').innerText = current + 1;
         let html = `<div class="q-text">${q.q}</div>`;
-        if(q.img) html += `<div class="img-frame">${q.img}</div>`;
-        html += `<div class="options">`;
+        if(q.img) html += `<div class="image-box">${q.img}</div>`;
+        html += `<div class="options-grid">`;
         q.opts.forEach((o, i) => {
-            html += `<div class="opt" onclick="verify(${i}, this)">${o}</div>`;
+            html += `<div class="opt" onclick="check(${i}, this)">${o}</div>`;
         });
         html += `</div>`;
         document.getElementById('display-area').innerHTML = html;
         document.getElementById('next-btn').style.display = 'none';
-        startClock();
+        startTimer();
     }
 
-    function verify(idx, el) {
+    function check(idx, el) {
         clearInterval(timer);
-        const correct = bank[current].ans;
+        const q = questions[current];
         const opts = document.querySelectorAll('.opt');
         opts.forEach(o => o.style.pointerEvents = 'none');
-        if(idx === correct) { el.classList.add('correct'); score++; }
-        else { el.classList.add('wrong'); opts[correct].classList.add('correct'); }
-        document.getElementById('next-btn').style.display = 'block';
+        if(idx === q.ans) { el.classList.add('correct'); score++; }
+        else { el.classList.add('wrong'); opts[q.ans].classList.add('correct'); }
+        document.getElementById('next-btn').style.display = 'inline-block';
     }
 
-    function startClock() {
-        let sec = 60;
-        document.getElementById('timer').innerText = sec;
+    function startTimer() {
+        let s = 60;
+        document.getElementById('timer').innerText = s;
         clearInterval(timer);
         timer = setInterval(() => {
-            sec--;
-            document.getElementById('timer').innerText = sec;
-            if(sec <= 0) { clearInterval(timer); verify(-1, null); }
+            s--; document.getElementById('timer').innerText = s;
+            if(s <= 0) { clearInterval(timer); check(-1, null); }
         }, 1000);
     }
 
-    function goNext() {
+    function nextQuestion() {
         current++;
-        if(current < bank.length) renderQuestion();
+        if(current < questions.length) showQuestion();
         else showFinal();
     }
 
     function showFinal() {
-        document.getElementById('quiz-page').style.display = 'none';
-        document.getElementById('result-page').style.display = 'block';
-        document.getElementById('final-msg').innerText = `انتهى الاختبار يا ${document.getElementById('stu-name').value}`;
-        document.getElementById('final-score').innerText = `${score} / ${bank.length}`;
+        document.getElementById('quiz-screen').style.display = 'none';
+        document.getElementById('result-screen').style.display = 'block';
+        document.getElementById('student-res-name').innerText = "أحسنت يا " + document.getElementById('student-name').value;
+        document.getElementById('final-score').innerText = score;
     }
 </script>
 </body>
